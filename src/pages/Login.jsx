@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import axios from 'axios'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 const API_URL = "https://api.tafadzwa.co/api/token/"
 
@@ -9,6 +9,7 @@ export default function Login() {
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  const navigate = useNavigate()
 
   const handleLogin = async (e) => {
     e.preventDefault()
@@ -24,8 +25,8 @@ export default function Login() {
       localStorage.setItem("access", res.data.access)
       localStorage.setItem("refresh", res.data.refresh)
 
-      // Force redirect (works reliably on cPanel)
-     window.location.href = "/#/dashboard"
+      // Redirect to dashboard after login
+      navigate('/dashboard')
 
 
 
@@ -38,51 +39,56 @@ export default function Login() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <form onSubmit={handleLogin} className="bg-white p-6 rounded-xl shadow-md w-80">
-        <h2 className="text-xl font-bold mb-4">Sign In</h2>
+    <div className="page-shell">
+      <div className="floating-blob" style={{ top: "-12%", right: "-8%" }} />
+      <div className="floating-blob" style={{ bottom: "-10%", left: "-12%" }} />
+
+      <div className="glass-card" style={{ maxWidth: 420, width: "100%", padding: "2.1rem" }}>
+        <div className="pill" style={{ marginBottom: "1rem", width: "fit-content" }}>
+          <span>🔐</span>
+          <span>Sign in</span>
+        </div>
 
         {error && (
-          <div className="bg-red-100 text-red-700 p-2 rounded mb-3 text-sm">
+          <div style={{ marginBottom: "0.75rem", color: "#fecdd3", background: "rgba(248,113,113,0.14)", border: "1px solid rgba(248,113,113,0.35)", padding: "0.65rem 0.8rem", borderRadius: 12 }}>
             {error}
           </div>
         )}
 
-        <input
-          type="text"
-          className="w-full border p-2 mb-3 rounded"
-          placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          disabled={loading}
-          required
-        />
+        <form onSubmit={handleLogin} style={{ display: "flex", flexDirection: "column", gap: "0.9rem" }}>
+          <input
+            id="login-username"
+            name="username"
+            type="text"
+            className="field"
+            placeholder="Username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            disabled={loading}
+            required
+          />
 
-        <input
-          type="password"
-          className="w-full border p-2 mb-3 rounded"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          disabled={loading}
-          required
-        />
+          <input
+            id="login-password"
+            name="password"
+            type="password"
+            className="field"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            disabled={loading}
+            required
+          />
 
-        <button
-          type="submit"
-          className="w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded"
-          disabled={loading}
-        >
-          {loading ? "Signing in..." : "Sign In"}
-        </button>
+          <button type="submit" className="btn-primary" disabled={loading}>
+            {loading ? "Signing in..." : "Sign In"}
+          </button>
 
-        <p className="text-sm mt-3 text-center">
-          Don't have an account?{" "}
-          <Link to="/register" className="text-blue-600 hover:underline">
-            Register
+          <Link to="/register" style={{ textDecoration: "none" }}>
+            <button type="button" className="btn-ghost">Need an account? Register</button>
           </Link>
-        </p>
-      </form>
+        </form>
+      </div>
     </div>
   )
 }

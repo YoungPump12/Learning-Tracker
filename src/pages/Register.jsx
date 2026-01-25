@@ -26,22 +26,30 @@ export default function Register() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <form onSubmit={handleRegister} className="bg-white p-6 rounded-xl shadow-md w-80">
-        <h2 className="text-xl font-bold mb-4">Register</h2>
-        <input className="w-full border p-2 mb-3" placeholder="Username"
-          onChange={(e) => setUsername(e.target.value)} />
-        <input className="w-full border p-2 mb-3" placeholder="Email"
-          onChange={(e) => setEmail(e.target.value)} />
-        <input className="w-full border p-2 mb-3" type="password" placeholder="Password"
-          onChange={(e) => setPassword(e.target.value)} />
-        <button className="w-full bg-green-600 text-white py-2 rounded">Register</button>
-        <p className="text-sm mt-3 text-center">
-  Already have an account?{" "}
-  <Link to="/login" className="text-blue-600">Login</Link>
-</p>
+    <div className="page-shell">
+      <div className="floating-blob" style={{ top: "-14%", left: "-8%" }} />
+      <div className="floating-blob" style={{ bottom: "-12%", right: "-10%" }} />
 
-      </form>
+      <div className="glass-card" style={{ maxWidth: 480, width: "100%", padding: "2.2rem" }}>
+        <div className="pill" style={{ marginBottom: "1rem", width: "fit-content" }}>
+          <span>✨</span>
+          <span>Create your account</span>
+        </div>
+
+        <form onSubmit={handleRegister} style={{ display: "flex", flexDirection: "column", gap: "0.9rem" }}>
+          <input className="field" placeholder="Username" id="register-username" name="username"
+            onChange={(e) => setUsername(e.target.value)} />
+          <input className="field" placeholder="Email" id="register-email" name="email"
+            onChange={(e) => setEmail(e.target.value)} />
+          <input className="field" type="password" placeholder="Password" id="register-password" name="password"
+            onChange={(e) => setPassword(e.target.value)} />
+
+          <button className="btn-primary" type="submit">Register</button>
+          <Link to="/login" style={{ textDecoration: "none" }}>
+            <button type="button" className="btn-ghost">Already have an account? Login</button>
+          </Link>
+        </form>
+      </div>
     </div>
   )
 }

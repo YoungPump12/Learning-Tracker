@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { motion } from "framer-motion";
+import { motion as Motion } from "framer-motion";
 import { CheckCircleIcon, PlayCircleIcon, TrashIcon } from "@heroicons/react/24/solid";
 
 const API_URL = "https://api.tafadzwa.co/";
@@ -91,57 +91,105 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="card bg-base-100 shadow p-4 w-full max-w-md">
-        <div className="flex justify-between items-center mb-4">
-          <h1 className="text-2xl font-bold">My Learning Tracker</h1>
-          <button onClick={logout} className="bg-red-500 text-white px-3 py-1 rounded">
-            Logout
-          </button>
-        </div>
+    <div className="page-shell" style={{ alignItems: "flex-start" }}>
+      <div className="floating-blob" style={{ top: "-12%", left: "-10%" }} />
+      <div className="floating-blob" style={{ bottom: "-14%", right: "-12%" }} />
 
-        <p className="text-sm mb-2">
-          Progress: {completedCount} / {totalCount} completed ({progress}%)
-        </p>
-
-        <div className="relative w-full bg-base-200 rounded-full h-4 overflow-hidden mb-4">
-          <motion.div
-            className="h-4 rounded-full bg-green-500"
-            initial={{ width: 0 }}
-            animate={{ width: `${progress}%` }}
-            transition={{ duration: 0.8 }}
-          />
-        </div>
-
-        <form onSubmit={createTask} className="bg-white p-4 rounded shadow mb-4">
-          <input className="input input-bordered w-full mb-2" placeholder="Task title" value={title} onChange={(e) => setTitle(e.target.value)} required />
-          <input className="input input-bordered w-full mb-2" placeholder="Description" value={description} onChange={(e) => setDescription(e.target.value)} />
-          <input type="datetime-local" className="input input-bordered w-full mb-2" value={scheduledDate} onChange={(e) => setScheduledDate(e.target.value)} required />
-          <button className="w-full bg-green-600 text-white py-2 rounded" disabled={loading}>
-            {loading ? "Adding..." : "Add Task"}
-          </button>
-        </form>
-
-        <div className="space-y-2">
-          {tasks.map((task) => (
-            <div key={task.id} className="bg-white p-3 rounded shadow flex justify-between items-center">
-              <div>
-                <h2 className="font-semibold">{task.title}</h2>
-                <small>{task.status.replace("_", " ")}</small>
-              </div>
-              <div className="flex gap-2">
-                <button onClick={() => updateStatus(task.id, "in_progress")} className="btn btn-warning btn-xs">
-                  <PlayCircleIcon className="w-4 h-4" />
-                </button>
-                <button onClick={() => updateStatus(task.id, "completed")} className="btn btn-success btn-xs">
-                  <CheckCircleIcon className="w-4 h-4" />
-                </button>
-                <button onClick={() => deleteTask(task.id)} className="btn btn-error btn-xs">
-                  <TrashIcon className="w-4 h-4" />
-                </button>
-              </div>
+      <div style={{ width: "100%", maxWidth: 1080, display: "flex", flexDirection: "column", gap: "1.25rem" }}>
+        <div className="glass-card" style={{ padding: "1.5rem" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", gap: "1rem", alignItems: "center" }}>
+            <div style={{ textAlign: "left" }}>
+              <p style={{ color: "#94a3b8", margin: 0 }}>Welcome back</p>
+              <h1 style={{ margin: "0.2rem 0", fontSize: "1.9rem" }}>My Learning Tracker</h1>
+              <p style={{ color: "#cbd5e1", margin: 0 }}>Track progress across your learning plan.</p>
             </div>
-          ))}
+            <button onClick={logout} className="btn-ghost" style={{ width: "auto" }}>Logout</button>
+          </div>
+        </div>
+
+        <div className="card-grid">
+          <div className="glass-card" style={{ padding: "1.25rem" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.75rem" }}>
+              <div>
+                <p style={{ color: "#94a3b8", margin: 0 }}>Overall progress</p>
+                <h2 style={{ margin: 0, fontSize: "1.4rem" }}>{completedCount} / {totalCount || 0} done</h2>
+              </div>
+              <div className="pill" style={{ height: "fit-content" }}>{progress}%</div>
+            </div>
+            <div className="progress-track">
+              <Motion.div
+                className="progress-fill"
+                initial={{ width: 0 }}
+                animate={{ width: `${progress}%` }}
+                transition={{ duration: 0.8 }}
+              />
+            </div>
+          </div>
+
+          <div className="glass-card" style={{ padding: "1.25rem" }}>
+            <p style={{ color: "#94a3b8", marginTop: 0, marginBottom: "0.65rem" }}>Add a task</p>
+            <form onSubmit={createTask} style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+              <input
+                id="task-title"
+                name="title"
+                className="field"
+                placeholder="Task title"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                required
+              />
+              <input
+                id="task-description"
+                name="description"
+                className="field"
+                placeholder="Description"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+              />
+              <input
+                id="task-scheduled"
+                name="scheduled_date"
+                type="datetime-local"
+                className="field"
+                value={scheduledDate}
+                onChange={(e) => setScheduledDate(e.target.value)}
+                required
+              />
+              <button className="btn-primary" disabled={loading}>
+                {loading ? "Adding..." : "Add Task"}
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <div className="glass-card" style={{ padding: "1.25rem" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.75rem" }}>
+            <h3 style={{ margin: 0 }}>Tasks</h3>
+            <span style={{ color: "#94a3b8" }}>{tasks.length} total</span>
+          </div>
+
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+            {tasks.length === 0 && <p style={{ color: "#94a3b8", margin: 0 }}>No tasks yet. Add your first one!</p>}
+            {tasks.map((task) => (
+              <div key={task.id} className="task-card">
+                <div style={{ textAlign: "left" }}>
+                  <h4 style={{ margin: 0 }}>{task.title}</h4>
+                  <small style={{ color: "#94a3b8" }}>{task.status.replace("_", " ")}</small>
+                </div>
+                <div style={{ display: "flex", gap: "0.35rem" }}>
+                  <button onClick={() => updateStatus(task.id, "in_progress")} className="btn-ghost" style={{ width: "auto", padding: "0.4rem 0.55rem" }}>
+                    <PlayCircleIcon className="w-4 h-4" />
+                  </button>
+                  <button onClick={() => updateStatus(task.id, "completed")} className="btn-ghost" style={{ width: "auto", padding: "0.4rem 0.55rem" }}>
+                    <CheckCircleIcon className="w-4 h-4" />
+                  </button>
+                  <button onClick={() => deleteTask(task.id)} className="btn-ghost" style={{ width: "auto", padding: "0.4rem 0.55rem" }}>
+                    <TrashIcon className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
