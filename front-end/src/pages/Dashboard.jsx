@@ -2,8 +2,12 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { motion as Motion } from "framer-motion";
 import { CheckCircleIcon, PlayCircleIcon, TrashIcon } from "@heroicons/react/24/solid";
+import API_BASE_URL from "../config/api";
 
-const API_URL = "https://api.tafadzwa.co/";
+// 🔄 API Endpoints - Change in src/config/api.js
+// Local: http://localhost:8000
+// Online: https://api.tafadzwa.co
+const API_URL = API_BASE_URL;
 
 const api = axios.create({
   baseURL: API_URL,

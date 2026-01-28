@@ -1,8 +1,12 @@
 import { useState } from 'react'
 import axios from 'axios'
 import { Link, useNavigate } from 'react-router-dom'
+import API_BASE_URL from '../config/api'
 
-const API_URL = "https://api.tafadzwa.co/api/token/"
+// 🔄 API Endpoint - Change in src/config/api.js
+// Local: http://localhost:8000/api/token/
+// Online: https://api.tafadzwa.co/api/token/
+const API_URL = `${API_BASE_URL}/api/token/`
 
 export default function Login() {
   const [username, setUsername] = useState('')

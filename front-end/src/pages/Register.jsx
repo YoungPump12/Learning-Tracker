@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import axios from 'axios'
 import { useNavigate, Link } from 'react-router-dom'
+import API_BASE_URL from '../config/api'
 
 
 export default function Register() {
@@ -12,7 +13,10 @@ export default function Register() {
   const handleRegister = async (e) => {
     e.preventDefault()
     try {
-      await axios.post("https://api.tafadzwa.co/api/register/", {
+      // 🔄 API Endpoint - Change in src/config/api.js
+      // Local: http://localhost:8000/api/register/
+      // Online: https://api.tafadzwa.co/api/register/
+      await axios.post(`${API_BASE_URL}/api/register/`, {
         username,
         email,
         password
