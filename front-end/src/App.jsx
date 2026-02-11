@@ -1,5 +1,6 @@
 import { Routes, Route, Navigate } from "react-router-dom"
 import Dashboard from "./pages/Dashboard"
+import Tasks from "./pages/Tasks"
 import Landing from "./pages/Landing"
 import Login from "./pages/Login"
 import Register from "./pages/Register"
@@ -11,6 +12,7 @@ function App() {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/dashboard" element={<Dashboard />} />
+      <Route path="/tasks" element={<Tasks />} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   )
