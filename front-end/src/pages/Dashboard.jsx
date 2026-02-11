@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import API_BASE_URL from "../config/api";
 
 const API_URL = API_BASE_URL;
@@ -487,6 +487,48 @@ export default function Dashboard() {
                 </div>
               ))
             )}
+          </div>
+        </div>
+
+        {/* Explore */}
+        <div className="glass-card" style={{ padding: "1.5rem", background: "#ffffff", border: "2px solid #e5e7eb", boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)" }}>
+          <h3 style={{ margin: "0 0 1rem 0", fontSize: "1.1rem", color: "#111827", fontWeight: "700" }}>Explore</h3>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: "0.75rem" }}>
+            {[
+              { to: "/calendar", title: "Calendar", desc: "Schedule & plan" },
+              { to: "/analytics", title: "Analytics", desc: "Deeper insights" },
+              { to: "/goals", title: "Goals", desc: "Milestones & plans" },
+              { to: "/resources", title: "Resources", desc: "Notes & links" },
+              { to: "/achievements", title: "Achievements", desc: "Badges & streaks" },
+              { to: "/settings", title: "Settings", desc: "Preferences" },
+            ].map((item) => (
+              <Link
+                key={item.to}
+                to={item.to}
+                style={{
+                  textDecoration: "none",
+                  padding: "0.9rem",
+                  borderRadius: "0.75rem",
+                  border: "2px solid #e5e7eb",
+                  background: "#f9fafb",
+                  boxShadow: "0 2px 4px rgba(0,0,0,0.06)",
+                  transition: "all 0.2s ease",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = "#f3f4f6";
+                  e.currentTarget.style.boxShadow = "0 6px 12px rgba(0,0,0,0.12)";
+                  e.currentTarget.style.borderColor = "#d1d5db";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = "#f9fafb";
+                  e.currentTarget.style.boxShadow = "0 2px 4px rgba(0,0,0,0.06)";
+                  e.currentTarget.style.borderColor = "#e5e7eb";
+                }}
+              >
+                <div style={{ color: "#111827", fontWeight: "800", marginBottom: "0.25rem" }}>{item.title}</div>
+                <div style={{ color: "#4b5563", fontSize: "0.85rem", fontWeight: "600" }}>{item.desc}</div>
+              </Link>
+            ))}
           </div>
         </div>
       </div>
