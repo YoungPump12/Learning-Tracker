@@ -490,7 +490,7 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* Explore */}
+        {/* Explore (commented out for now)
         <div className="glass-card" style={{ padding: "1.5rem", background: "#ffffff", border: "2px solid #e5e7eb", boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)" }}>
           <h3 style={{ margin: "0 0 1rem 0", fontSize: "1.1rem", color: "#111827", fontWeight: "700" }}>Explore</h3>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: "0.75rem" }}>
@@ -531,6 +531,7 @@ export default function Dashboard() {
             ))}
           </div>
         </div>
+        */}
       </div>
     </div>
   );
